@@ -4,7 +4,7 @@
   "description": "Show the current Pi session id in the footer.",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/status.ts"
   },
   "keywords": [
     "pi-package",
@@ -31,7 +31,7 @@
   ],
   "pi": {
     "extensions": [
-      "./src/index.ts"
+      "./src/status.ts"
     ]
   },
   "peerDependencies": {

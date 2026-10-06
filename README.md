@@ -16,11 +16,13 @@ Reload an already-running Pi process:
 /reload
 ```
 
-The default footer keeps its normal layout and adds a short session id right-aligned on the folder/branch line:
+The extension leaves Pi's built-in footer unchanged and adds the session id through `ctx.ui.setStatus()`. It appears in the extension-status line below the token/model line, alongside other extension statuses:
 
 ```txt
-~/dev/project (main)                                      sid 019fcc94-7f10-7545
+sid 019fcc94-7f10-7545
 ```
+
+Token usage, cache-hit rate (`CH…%`, when supported by Pi), context usage, costs, and model information are rendered by Pi itself. The extension does not copy or replace that rendering logic.
 
 The short id is a UUID prefix accepted by `pi --session <id>`.
 
@@ -49,6 +51,8 @@ sid unsaved
 
 ## Notes
 
-- The extension preserves Pi's normal footer content and status lines.
-- Status lines from other extensions, such as MCP server counts, remain below the model/context line.
-- It does not modify sessions.
+- The extension never calls or overrides `setFooter()`. It adds only its own status entry and removes it on shutdown.
+- Other extension statuses, including MCP server counts, remain visible. Pi controls sorting and truncation at narrow terminal widths.
+- Short/full session-id configuration is unchanged. New, switched, and resumed sessions refresh the status; unsaved sessions refresh after a completed turn.
+- It does not scan history, calculate token statistics, or modify sessions.
+- The legacy custom renderer is no longer a package entry point. Its existing benchmark and tests cover only that inactive implementation.
